@@ -59,7 +59,7 @@ createApp({
         appendLog('写入输入文件...');
         await ffmpeg.writeFile(inputName, await fetchFile(f));
         appendLog('提取音频...');
-        await ffmpeg.exec(['-i', inputName, '-vn', '-c:a', 'copy', '-threads', String(t), audioName]);
+        await ffmpeg.exec(['-i', inputName, '-vn', '-c:a', 'aac', '-b:a', '192k', '-ac', '2', '-ar', '48000', '-movflags', 'faststart', '-threads', String(t), audioName]);
         appendLog('提取仅视频轨...');
         await ffmpeg.exec(['-i', inputName, '-an', '-c:v', 'copy', '-movflags', 'faststart', '-threads', String(t), videoName]);
         appendLog('融合音视频为 MP4...');
