@@ -1,0 +1,22 @@
+{
+  "name": "ffmpeg-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser FFmpeg (ffmpeg.wasm) with webpack, non-SIMD fallback, TS pipeline",
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "0.12.10",
+    "@ffmpeg/core": "0.12.10",
+    "@ffmpeg/util": "0.12.1"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "11.0.0",
+    "html-webpack-plugin": "5.5.3",
+    "webpack": "5.91.0",
+    "webpack-cli": "4.10.0",
+    "webpack-dev-server": "4.15.1"
+  }
+}
