@@ -29,7 +29,7 @@ module.exports = {
       patterns: [
         {
           from: path.resolve(__dirname, 'node_modules/@ffmpeg/core/dist/umd'),
-          to: path.resolve(__dirname, 'dist/ffmpeg'),
+          to: 'ffmpeg',
         },
       ],
     }),
