@@ -11,9 +11,15 @@ module.exports = {
   },
   mode: 'development',
   devServer: {
-    static: {
-      directory: path.resolve(__dirname, 'dist'),
-    },
+    static: [
+      {
+        directory: path.resolve(__dirname, 'dist'),
+      },
+      {
+        directory: path.resolve(__dirname, 'src/vendor'),
+        publicPath: '/vendor',
+      },
+    ],
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'require-corp',
@@ -30,6 +36,10 @@ module.exports = {
         {
           from: path.resolve(__dirname, 'node_modules/@ffmpeg/core/dist/umd'),
           to: 'ffmpeg',
+        },
+        {
+          from: path.resolve(__dirname, 'src/vendor/vue.global.prod.js'),
+          to: 'vendor',
         },
       ],
     }),
