@@ -27,6 +27,11 @@ module.exports = {
             from: path.resolve(__dirname, 'node_modules/@ffmpeg/ffmpeg/dist/umd'),
             to: 'ffmpeg-lib'
           }
+          ,
+          {
+            from: path.resolve(__dirname, 'node_modules/@ffmpeg.wasm/core-st/dist'),
+            to: 'ffmpeg-st'
+          }
         ]
       })
     ]

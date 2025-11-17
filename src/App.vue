@@ -27,7 +27,7 @@ import { ref, computed, onMounted } from 'vue'
 export default {
   setup() {
     const FFmpegClass = window.FFmpegWASM && window.FFmpegWASM.FFmpeg
-    const ffmpeg = new FFmpegClass()
+    let ffmpeg = new FFmpegClass()
     const loaded = ref(false)
     const file = ref(null)
     const threads = ref(4)
@@ -43,19 +43,28 @@ export default {
       logText.value += (msg.endsWith('\n') ? msg : msg + '\n')
     }
 
-    ffmpeg.on('log', ({ message }) => appendLog(message))
-    ffmpeg.on('progress', ({ progress, time }) => {
-      progressText.value = `进度: ${(progress * 100).toFixed(1)}% 时间: ${time || ''}`
-    })
+    function bindEvents () {
+      ffmpeg.on('log', ({ message }) => appendLog(message))
+      ffmpeg.on('progress', ({ progress, time }) => {
+        progressText.value = `进度: ${(progress * 100).toFixed(1)}% 时间: ${time || ''}`
+      })
+    }
+    bindEvents()
 
-    const baseURL = '/ffmpeg'
+    const coreMt = { js: '/ffmpeg/ffmpeg-core.js', wasm: '/ffmpeg/ffmpeg-core.wasm' }
+    const coreSt = { js: '/ffmpeg-st/ffmpeg-core.js', wasm: '/ffmpeg-st/ffmpeg-core.wasm' }
 
     async function ensureLoaded() {
       if (loaded.value) return
-      await ffmpeg.load({
-        coreURL: `${baseURL}/ffmpeg-core.js`,
-        wasmURL: `${baseURL}/ffmpeg-core.wasm`
-      })
+      try {
+        await ffmpeg.load({ coreURL: coreMt.js, wasmURL: coreMt.wasm })
+      } catch (e) {
+        appendLog('SIMD/线程不可用，切换到非SIMD单线程内核...')
+        try { ffmpeg.terminate() } catch (_) {}
+        ffmpeg = new FFmpegClass()
+        bindEvents()
+        await ffmpeg.load({ coreURL: coreSt.js, wasmURL: coreSt.wasm })
+      }
       loaded.value = true
     }
 
