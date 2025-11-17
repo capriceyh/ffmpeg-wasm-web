@@ -4,19 +4,22 @@
   "private": true,
   "description": "Browser FFmpeg (ffmpeg.wasm) with webpack, non-SIMD fallback, TS pipeline",
   "scripts": {
-    "start": "webpack serve --mode development",
-    "build": "webpack --mode production"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "@ffmpeg/ffmpeg": "0.12.10",
     "@ffmpeg/core": "0.12.10",
-    "@ffmpeg/util": "0.12.1"
+    "@ffmpeg/util": "0.12.1",
+    "vue": "3.2.37"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "9.1.0",
-    "html-webpack-plugin": "5.5.3",
-    "webpack": "5.91.0",
-    "webpack-cli": "4.10.0",
-    "webpack-dev-server": "4.15.1"
+    "@vue/cli-plugin-babel": "4.5.2",
+    "@vue/cli-service": "4.5.2",
+    "copy-webpack-plugin": "6.4.1",
+    "@vue/compiler-sfc": "3.2.37",
+    "webpack": "4.46.0",
+    "@babel/plugin-proposal-class-properties": "7.10.4",
+    "@babel/plugin-proposal-private-methods": "7.10.4"
   }
 }
